@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intranet System Overview | LH Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   CSS Variables - Theme A: HPE Corporate Light
+   ============================================= */
+:root {
+  --bg-slide: #FFFFFF;
+  --bg-title: #003D32;
+  --bg-title-end: #01A982;
+  --accent-teal: #01A982;
+  --text-primary: #1A1A1A;
+  --text-secondary: #555555;
+  --shadow-card: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-card-hover: 0 6px 24px rgba(0,0,0,0.12);
+  --border-light: #E8E8E8;
+  --bg-subtle: #F7FAF9;
+  --gradient-title: linear-gradient(135deg, var(--bg-title) 0%, var(--bg-title-end) 100%);
+  --gradient-accent: linear-gradient(90deg, var(--bg-title) 0%, var(--accent-teal) 100%);
+}
+
+/* =============================================
+   Reset & Base
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #F0F2F5;
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* =============================================
+   Presentation Mode (Fullscreen Slides)
+   ============================================= */
+.pres-mode {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #111;
+  overflow: hidden;
+}
+
+.pres-mode.active { display: block; }
+
+.pres-slide {
+  display: none !important;
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  background: var(--bg-slide);
+  overflow: hidden;
+  transform-origin: top left;
+}
+
+.pres-slide.active {
+  display: flex !important;
+  flex-direction: column;
+}
+
+/* =============================================
+   Navigation Bar
+   ============================================= */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--bg-title);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  height: 56px;
+  gap: 8px;
+}
+
+.nav-brand {
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  margin-right: 24px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-brand span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-teal);
+  border-radius: 50%;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  flex: 1;
+}
+
+.nav-links a {
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #fff;
+  background: rgba(1,169,130,0.25);
+}
+
+.nav-btn-preset {
+  background: var(--accent-teal);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  margin-left: 12px;
+}
+
+.nav-btn-preset:hover { background: #018F70; }
+
+/* =============================================
+   Slide Wrapper (Website Mode)
+   ============================================= */
+.website-content {
+  padding-top: 56px;
+}
+
+.slide-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+}
+
+.slide-inner {
+  width: 100%;
+  max-width: 1200px;
+  background: var(--bg-slide);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============================================
+   Slide Header (Confidential Bar)
+   ============================================= */
+.slide-header {
+  background: var(--gradient-accent);
+  color: rgba(255,255,255,0.9);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 8px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slide-header-right {
+  font-weight: 600;
+}
+
+/* =============================================
+   Slide Body
+   ============================================= */
+.slide-body {
+  flex: 1;
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============================================
+   Slide Footer
+   ============================================= */
+.slide-footer {
+  padding: 12px 32px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+}
+
+/* =============================================
+   Title Slide
+   ============================================= */
+.slide-title-bg {
+  background: var(--gradient-title);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 60px;
+}
+
+.slide-title-bg .title-main {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
+}
+
+.slide-title-bg .title-sub {
+  font-size: 24px;
+  font-weight: 400;
+  opacity: 0.9;
+  max-width: 800px;
+  line-height: 1.5;
+  margin-bottom: 40px;
+}
+
+.slide-title-bg .title-meta {
+  font-size: 16px;
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+.slide-title-bg .title-dept {
+  margin-top: 12px;
+  font-size: 14px;
+  opacity: 0.6;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.slide-title-bg .title-line {
+  width: 60px;
+  height: 3px;
+  background: var(--accent-teal);
+  border-radius: 2px;
+  margin: 24px auto;
+}
+
+/* =============================================
+   Section Divider
+   ============================================= */
+.slide-section-divider {
+  background: var(--gradient-title);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 60px;
+}
+
+.slide-section-divider .section-label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 16px;
+}
+
+.slide-section-divider .section-title {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.slide-section-divider .section-line {
+  width: 48px;
+  height: 3px;
+  background: var(--accent-teal);
+  border-radius: 2px;
+  margin: 24px auto;
+}
+
+/* =============================================
+   Thank You Slide
+   ============================================= */
+.slide-thankyou {
+  background: var(--gradient-title);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 60px;
+}
+
+.slide-thankyou .ty-title {
+  font-size: 56px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.slide-thankyou .ty-dept {
+  font-size: 22px;
+  font-weight: 500;
+  opacity: 0.85;
+  margin-bottom: 12px;
+}
+
+.slide-thankyou .ty-meta {
+  font-size: 15px;
+  opacity: 0.6;
+}
+
+.slide-thankyou .ty-line {
+  width: 48px;
+  height: 3px;
+  background: var(--accent-teal);
+  border-radius: 2px;
+  margin: 28px auto;
+}
+
+/* =============================================
+   Content Title
+   ============================================= */
+.content-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 36px;
+  position: relative;
+  padding-bottom: 16px;
+}
+
+.content-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 48px;
+  height: 3px;
+  background: var(--accent-teal);
+  border-radius: 2px;
+}
+
+/* =============================================
+   Cards Layout
+   ============================================= */
+.cards-row {
+  display: grid;
+  gap: 24px;
+  flex: 1;
+}
+
+.cards-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.cards-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+.info-card {
+  background: var(--bg-slide);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.info-card .card-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.info-card .card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.info-card .card-body {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.info-card .card-body strong {
+  color: var(--text-primary);
+}
+
+/* Card with teal top border */
+.info-card.card-teal {
+  border-top: 3px solid var(--accent-teal);
+}
+
+/* =============================================
+   Table Layout
+   ============================================= */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 15px;
+}
+
+.data-table thead th {
+  background: var(--bg-title);
+  color: #fff;
+  padding: 14px 20px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.data-table thead th:first-child {
+  border-radius: 8px 0 0 0;
+}
+
+.data-table thead th:last-child {
+  border-radius: 0 8px 0 0;
+}
+
+.data-table tbody td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: var(--bg-subtle);
+}
+
+.table-note {
+  margin-top: 24px;
+  padding: 14px 20px;
+  background: #FFF8E6;
+  border-left: 4px solid #F0AD4E;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: #856404;
+  font-weight: 500;
+}
+
+/* =============================================
+   Timeline Layout
+   ============================================= */
+.timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  flex: 1;
+  padding: 20px 0;
+}
+
+.timeline-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0 12px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--border-light);
+}
+
+.timeline-item:first-child::before { left: 50%; }
+.timeline-item:last-child::before { right: 50%; }
+
+.timeline-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(1,169,130,0.3);
+}
+
+.timeline-item:last-child .timeline-dot {
+  background: var(--bg-title);
+  box-shadow: 0 2px 8px rgba(0,61,50,0.3);
+}
+
+.timeline-content {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.timeline-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.timeline-item:last-child .timeline-label {
+  color: var(--bg-title);
+}
+
+.timeline-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* =============================================
+   Flow Diagram
+   ============================================= */
+.flow-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  margin: 20px 0;
+  flex: 1;
+}
+
+.flow-node {
+  background: var(--bg-subtle);
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  padding: 18px 22px;
+  text-align: center;
+  min-width: 140px;
+  transition: all 0.25s;
+}
+
+.flow-node:hover {
+  border-color: var(--accent-teal);
+  box-shadow: 0 2px 12px rgba(1,169,130,0.15);
+}
+
+.flow-node .flow-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-teal);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.flow-node .flow-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.flow-arrow {
+  font-size: 24px;
+  color: var(--accent-teal);
+  flex-shrink: 0;
+}
+
+.flow-note {
+  margin-top: 24px;
+  padding: 14px 20px;
+  background: var(--bg-subtle);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  border: 1px solid var(--border-light);
+}
+
+.flow-note strong { color: var(--text-primary); }
+
+/* =============================================
+   Stats + Cards
+   ============================================= */
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-title);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.stat-badge .badge-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-teal);
+  border-radius: 50%;
+}
+
+.cr-card {
+  background: var(--bg-slide);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.25s;
+}
+
+.cr-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.cr-card .cr-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cr-card .cr-number {
+  background: var(--accent-teal);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cr-card .cr-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cr-card .cr-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.cr-card .cr-detail {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.cr-card .cr-detail strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.cr-card .cr-status {
+  margin-top: 8px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cr-status.status-approved {
+  background: #E6F9F0;
+  color: #0D7A4A;
+}
+
+.cr-status.status-pending {
+  background: #FFF3E0;
+  color: #E67E22;
+}
+
+/* =============================================
+   Pros & Cons
+   ============================================= */
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  flex: 1;
+}
+
+.comparison-col {
+  border-radius: 12px;
+  padding: 28px 24px;
+}
+
+.comparison-col.pros {
+  background: #F0FAF5;
+  border: 1px solid #C3E8D5;
+}
+
+.comparison-col.cons {
+  background: #FEF5F0;
+  border: 1px solid #F0D5C3;
+}
+
+.comparison-col .col-header {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comparison-col.pros .col-header { color: #0D7A4A; }
+.comparison-col.cons .col-header { color: #C0392B; }
+
+.comparison-item {
+  display: flex;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.comparison-item:last-child { border-bottom: none; }
+
+.comparison-item .item-icon {
+  flex-shrink: 0;
+  font-size: 18px;
+  margin-top: 1px;
+}
+
+/* =============================================
+   Summary Bullet List
+   ============================================= */
+.summary-list {
+  list-style: none;
+  padding: 0;
+}
+
+.summary-list li {
+  display: flex;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 16px;
+  line-height: 1.6;
+  align-items: flex-start;
+}
+
+.summary-list li:last-child { border-bottom: none; }
+
+.summary-list .num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--accent-teal);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+.summary-list .text { color: var(--text-secondary); font-weight: 400; }
+.summary-list .text strong { color: var(--text-primary); }
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media (max-width: 1024px) {
+  .slide-section { padding: 40px 16px; }
+  .slide-body { padding: 32px 24px; }
+  .cards-row.cols-3 { grid-template-columns: 1fr; }
+  .cards-row.cols-2 { grid-template-columns: 1fr; }
+  .comparison { grid-template-columns: 1fr; }
+  .timeline { flex-direction: column; gap: 24px; }
+  .timeline-item::before { display: none; }
+  .flow-container { flex-wrap: wrap; justify-content: center; }
+}
+
+/* =============================================
+   Presentation Mode Controls Overlay
+   ============================================= */
+.pres-controls {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10001;
+  display: none;
+  gap: 8px;
+}
+
+.pres-mode.active .pres-controls { display: flex; }
+
+.pres-controls button {
+  background: rgba(0,61,50,0.85);
+  color: #fff;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pres-controls button:hover { background: rgba(1,169,130,0.95); }
+
+.pres-slide-counter {
+  position: fixed;
+  bottom: 28px;
+  left: 24px;
+  z-index: 10001;
+  display: none;
+  background: rgba(0,61,50,0.85);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+
+.pres-mode.active .pres-slide-counter { display: block; }
+
+/* Prevent body scroll in presentation mode */
+.pres-mode-active { overflow: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION BAR
+     ============================================================ -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-brand">
+    <span></span> LH Bank Intranet
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#sec-1" data-slide="0">ภาพรวม</a>
+    <a href="#sec-3" data-slide="2">โครงสร้าง</a>
+    <a href="#sec-4" data-slide="3">Server</a>
+    <a href="#sec-5" data-slide="4">ประวัติ</a>
+    <a href="#sec-6" data-slide="5">Daily Operation</a>
+    <a href="#sec-8" data-slide="7">สถานะพัฒนา</a>
+    <a href="#sec-10" data-slide="9">พิจารณา</a>
+    <a href="#sec-11" data-slide="10">ข้อดี/ข้อเสีย</a>
+    <a href="#sec-12" data-slide="11">สรุป</a>
+  </div>
+  <button class="nav-btn-preset" onclick="enterPresentation()" title="Fullscreen Presentation (F5)">
+    ▶ Presentation
+  </button>
+</nav>
+
+<!-- ============================================================
+     WEBSITE MODE - SCROLLABLE SECTIONS
+     ============================================================ -->
+<div class="website-content" id="websiteContent">
+
+  <!-- SLIDE 1: Title Slide -->
+  <div class="slide-section" id="sec-1">
+    <div class="slide-inner">
+      <div class="slide-title-bg" style="flex:1;">
+        <div class="title-main">Intranet System Overview</div>
+        <div class="title-line"></div>
+        <div class="title-sub">การถ่ายโอนการดูแลระบบ Intranet ให้ Digital &amp; Automation Development</div>
+        <div class="title-meta">กันยายน 2568</div>
+        <div class="title-dept">IT Department</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Section Divider -->
+  <div class="slide-section" id="sec-2">
+    <div class="slide-inner">
+      <div class="slide-section-divider" style="flex:1;">
+        <div class="section-label">Section 01</div>
+        <div class="section-line"></div>
+        <div class="section-title">ภาพปัจจุบัน</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Current Management Structure -->
+  <div class="slide-section" id="sec-3">
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span>Confidential | LH Bank</span>
+        <span class="slide-header-right">IT Department</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-title">โครงสร้างการดูแลระบบ Intranet</div>
+        <div class="cards-row cols-3" style="flex:1;">
+          <div class="info-card card-teal">
+            <div class="card-icon">📝</div>
+            <div class="card-title">Contents Management</div>
+            <div class="card-body">
+              <strong>ทีมดูแลหลัก:</strong><br>
+              K.Bolm (HR)<br>
+              K.Chev (Non-Core)
+            </div>
+          </div>
+          <div class="info-card card-teal">
+            <div class="card-icon">🔗</div>
+            <div class="card-title">System Integration</div>
+            <div class="card-body">
+              <strong>ทีมดูแล:</strong> K.Doy<br><br>
+              ประสานงานระหว่าง LH และ Indigy
+            </div>
+          </div>
+          <div class="info-card card-teal">
+            <div class="card-icon">🖥️</div>
+            <div class="card-title">Server and Storage</div>
+            <div class="card-body">
+              <strong>ทีมดูแล:</strong> IT-System<br><br>
+              ดูแลโครงสร้าง Server และพื้นที่จัดเก็บข้อมูล
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Intranet System Overview</span>
+        <span>3 / 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Server Infrastructure -->
+  <div class="slide-section" id="sec-4">
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span>Confidential | LH Bank</span>
+        <span class="slide-header-right">IT Department</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-title">โครงสร้าง Server ปัจจุบัน</div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Environment</th>
+              <th>SharePoint</th>
+              <th>Database</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dev / UAT</strong></td>
+              <td>SharePoint SE 1 เครื่อง</td>
+              <td>SQL Server 2025 1 เครื่อง</td>
+            </tr>
+            <tr>
+              <td><strong>Production</strong></td>
+              <td>SharePoint SE 1 เครื่อง</td>
+              <td>SQL Server 2025 1 เครื่อง</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table-note">
+          ⚠️ โครงสร้าง Server มีเพียงแบบเดียว คือ Server + Database
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Intranet System Overview</span>
+        <span>4 / 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Timeline -->
+  <div class="slide-section" id="sec-5">
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span>Confidential | LH Bank</span>
+        <span class="slide-header-right">IT Department</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-title">ประวัติการ Upgrade ระบบ</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot">1</div>
+            <div class="timeline-content">
+              <div class="timeline-label">เดิม</div>
+              <div class="timeline-text">SharePoint 2013<br>+ SQL Server 2014</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">2</div>
+            <div class="timeline-content">
+              <div class="timeline-label">Upgrade ชั่วคราว</div>
+              <div class="timeline-text">SharePoint 2016<br>+ SQL Server 2019</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">3</div>
+            <div class="timeline-content">
+              <div class="timeline-label">ปัจจุบัน</div>
+              <div class="timeline-text">SharePoint SE<br>+ SQL Server 2025</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">4</div>
+            <div class="timeline-content">
+              <div class="timeline-label">อนาคต</div>
+              <div class="timeline-text">ย้ายข้อมูล 33 Sites (~100GB) ไปยัง Intranet ใหม่</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Intranet System Overview</span>
+        <span>5 / 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Daily Operations Flow -->
+  <div class="slide-section" id="sec-6">
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span>Confidential | LH Bank</span>
+        <span class="slide-header-right">IT Department</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-title">Daily Operation - ขั้นตอนการดำเนินงาน</div>
+        <div class="flow-container">
+          <div class="flow-node">
+            <div class="flow-label">Step 1</div>
+            <div class="flow-name">Requestor</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-label">Step 2</div>
+            <div class="flow-name">CR</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-label">Step 3</div>
+            <div class="flow-name">System Integrator</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-label">Step 4</div>
+            <div class="flow-name">PO</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-label">Step 5</div>
+            <div class="flow-name">Vendor</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-label">Step 6</div>
+            <div class="flow-name">Deliver</div>
+          </div>
+        </div>
+        <div class="flow-note">
+          <strong>K.Doy</strong> ดูแลการประสานงาน &nbsp;|&nbsp; <strong>K.Chev</strong> ดูแล Content Layout ตาม CR
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Intranet System Overview</span>
+        <span>6 / 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Section Divider -->
+  <div class="slide-section" id="sec-7">
+    <div class="slide-inner">
+      <div class="slide-section-divider" style="flex:1;">
+        <div class="section-label">Section 02</div>
+        <div class="section-line"></div>
+        <div class="section-title">แผนการพัฒนาปัจจุบัน</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Development Status -->
+  <div class="slide-section" id="sec-8">
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span>Confidential | LH Bank</span>
+        <span class="slide-header-right">IT Department</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-title">สถานะการพัฒนาล่าสุด</div>
+        <div class="stat-badge">
+          <span class="badge-dot"></span> UAT: กันยายน 2568
+        </div>
+        <div class="cards-row cols-2" style="flex:1;">
+          <div class="cr-card">
+            <div class="cr-header">
+              <span class="cr-number">CR #1</span>
+              <span class="cr-name">ระบบ Upload Files ไปยัง ShareDrive</span>
+            </div>
+            <div class="cr-details">
+              <div class="cr-detail"><strong>ราคา:</strong> 70,000 บาท</div>
+              <div class="cr-detail"><strong>ระยะเวลา:</strong> 7 MD</div>
+            </div>
+            <div class="cr-status status-approved">✅ อนุมัติแล้ว รอ PO</div>
+          </div>
+          <div class="cr-card">
+            <div class="cr-header">
+              <span class="cr-number">CR #2</span>
+              <span class="cr-name">ระบบ Contents สำหรับ BU อัพเดทข่าวสาร</span>
+            </div>
+            <div class="cr-details">
+              <div class="cr-detail"><strong>ราคา:</strong> 200,000 บาท</div>
+              <div class="cr-detail"><strong>ระยะเวลา:</strong> 30 MD</div>
+            </div>
+            <div class="cr-status status-pending">⏳ รอดำเนินการ</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Intranet System Overview</span>
+        <span>8 / 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Section Divider -->
+  <div class="slide-section" id="sec-9">
+    <div class="slide-inner">
+      <div class="slide-section-divider" style="flex:1;">
+        <div class="section-label">Section 03</div>
+        <div class="section-line"></div>
+        <div class="section-title">สิ่งที่ DAD ต้องพิจารณา</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Considerations -->
+  <div class="slide-section" id="sec-10">
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span>Confidential | LH Bank</span>
+        <span class="slide-header-right">IT Department</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-title">สิ่งที่ทีม DAD ต้องพิจารณา</div>
+        <div class="cards-row cols-2" style="flex:1;">
+          <div class="info-card card-teal">
+            <div class="card-icon">🔄</div>
+            <div class="card-title">Daily Operation</div>
+            <div class="card-body">
+              งานประสานงานกับ Vendor เมื่อพบปัญหาจาก User<br><br>
+              ต้องมีความเข้าใจในขั้นตอนการทำงานร่วมกับ Supplier และ Vendor ภายนอก
+            </div>
+          </div>
+          <div class="info-card card-teal">
+            <div class="card-icon">🖥️</div>
+            <div class="card-title">Server Management</div>
+            <div class="card-body">
+              ทีม IT-System ดูแลอยู่แล้ว<br><br>
+              <strong>DAD ไม่น่าจะได้รับอนุญาต</strong> ให้ดูแล Server โดยตรง
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Intranet System Overview</span>
+        <span>10 / 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: Pros & Cons -->
+  <div class="slide-section" id="sec-11">
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span>Confidential | LH Bank</span>
+        <span class="slide-header-right">IT Department</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-title">การดูแล Content Management</div>
+        <div class="comparison">
+          <div class="comparison-col pros">
+            <div class="col-header">✅ ข้อดี</div>
+            <div class="comparison-item">
+              <span class="item-icon">✅</span>
+              <span>สามารถเข้า Manage ได้เอง</span>
+            </div>
+            <div class="comparison-item">
+              <span class="item-icon">✅</span>
+              <span>สามารถกำหนดนโยบายหรือเปลี่ยนแปลงได้เร็ว</span>
+            </div>
+          </div>
+          <div class="comparison-col cons">
+            <div class="col-header">❌ ข้อเสีย</div>
+            <div class="comparison-item">
+              <span class="item-icon">❌</span>
+              <span>การเปลี่ยนแปลงต้องขออนุมัติจาก IT-Infra, IT-System ก่อน</span>
+            </div>
+            <div class="comparison-item">
+              <span class="item-icon">❌</span>
+              <span>มีค่าใช้จ่าย License (SharePoint, Windows Server, SQL)</span>
+            </div>
+            <div class="comparison-item">
+              <span class="item-icon">❌</span>
+              <span>ไม่รับการโอนไป BU อื่น</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Intranet System Overview</span>
+        <span>11 / 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: Summary -->
+  <div class="slide-section" id="sec-12">
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span>Confidential | LH Bank</span>
+        <span class="slide-header-right">IT Department</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-title">สรุปและข้อเสนอแนะ</div>
+        <ul class="summary-list">
+          <li>
+            <span class="num">1</span>
+            <span class="text">งานหลักที่ DAD จะรับผิดชอบคือ <strong>Content Management</strong></span>
+          </li>
+          <li>
+            <span class="num">2</span>
+            <span class="text">งาน Server ยังคงเป็นหน้าที่ของ <strong>IT-System</strong></span>
+          </li>
+          <li>
+            <span class="num">3</span>
+            <span class="text">งาน Daily Operation ต้องมีการ <strong>ประสานงานกับ Vendor อย่างต่อเนื่อง</strong></span>
+          </li>
+          <li>
+            <span class="num">4</span>
+            <span class="text">ควรพิจารณาข้อจำกัดด้าน <strong>License และการขออนุมัติ</strong></span>
+          </li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>Intranet System Overview</span>
+        <span>12 / 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Thank You -->
+  <div class="slide-section" id="sec-13">
+    <div class="slide-inner">
+      <div class="slide-thankyou" style="flex:1;">
+        <div class="ty-title">ขอบคุณครับ/ค่ะ</div>
+        <div class="ty-line"></div>
+        <div class="ty-dept">Digital &amp; Automation Development</div>
+        <div class="ty-meta">IT Department | กันยายน 2568</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     PRESENTATION MODE (Fullscreen)
+     ============================================================ -->
+<div class="pres-mode" id="presMode">
+
+  <!-- Slide 1 -->
+  <div class="pres-slide active" data-slide="1">
+    <div class="slide-title-bg" style="flex:1;">
+      <div class="title-main">Intranet System Overview</div>
+      <div class="title-line"></div>
+      <div class="title-sub">การถ่ายโอนการดูแลระบบ Intranet ให้ Digital &amp; Automation Development</div>
+      <div class="title-meta">กันยายน 2568</div>
+      <div class="title-dept">IT Department</div>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="pres-slide" data-slide="2">
+    <div class="slide-section-divider" style="flex:1;">
+      <div class="section-label">Section 01</div>
+      <div class="section-line"></div>
+      <div class="section-title">ภาพปัจจุบัน</div>
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="pres-slide" data-slide="3">
+    <div class="slide-header">
+      <span>Confidential | LH Bank</span>
+      <span class="slide-header-right">IT Department</span>
+    </div>
+    <div class="slide-body">
+      <div class="content-title">โครงสร้างการดูแลระบบ Intranet</div>
+      <div class="cards-row cols-3" style="flex:1;">
+        <div class="info-card card-teal">
+          <div class="card-icon">📝</div>
+          <div class="card-title">Contents Management</div>
+          <div class="card-body">
+            <strong>ทีมดูแลหลัก:</strong><br>
+            K.Bolm (HR)<br>
+            K.Chev (Non-Core)
+          </div>
+        </div>
+        <div class="info-card card-teal">
+          <div class="card-icon">🔗</div>
+          <div class="card-title">System Integration</div>
+          <div class="card-body">
+            <strong>ทีมดูแล:</strong> K.Doy<br><br>
+            ประสานงานระหว่าง LH และ Indigy
+          </div>
+        </div>
+        <div class="info-card card-teal">
+          <div class="card-icon">🖥️</div>
+          <div class="card-title">Server and Storage</div>
+          <div class="card-body">
+            <strong>ทีมดูแล:</strong> IT-System<br><br>
+            ดูแลโครงสร้าง Server และพื้นที่จัดเก็บข้อมูล
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Intranet System Overview</span>
+      <span>3 / 13</span>
+    </div>
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="pres-slide" data-slide="4">
+    <div class="slide-header">
+      <span>Confidential | LH Bank</span>
+      <span class="slide-header-right">IT Department</span>
+    </div>
+    <div class="slide-body">
+      <div class="content-title">โครงสร้าง Server ปัจจุบัน</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Environment</th>
+            <th>SharePoint</th>
+            <th>Database</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Dev / UAT</strong></td>
+            <td>SharePoint SE 1 เครื่อง</td>
+            <td>SQL Server 2025 1 เครื่อง</td>
+          </tr>
+          <tr>
+            <td><strong>Production</strong></td>
+            <td>SharePoint SE 1 เครื่อง</td>
+            <td>SQL Server 2025 1 เครื่อง</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-note">
+        ⚠️ โครงสร้าง Server มีเพียงแบบเดียว คือ Server + Database
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Intranet System Overview</span>
+      <span>4 / 13</span>
+    </div>
+  </div>
+
+  <!-- Slide 5 -->
+  <div class="pres-slide" data-slide="5">
+    <div class="slide-header">
+      <span>Confidential | LH Bank</span>
+      <span class="slide-header-right">IT Department</span>
+    </div>
+    <div class="slide-body">
+      <div class="content-title">ประวัติการ Upgrade ระบบ</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <div class="timeline-content">
+            <div class="timeline-label">เดิม</div>
+            <div class="timeline-text">SharePoint 2013<br>+ SQL Server 2014</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-content">
+            <div class="timeline-label">Upgrade ชั่วคราว</div>
+            <div class="timeline-text">SharePoint 2016<br>+ SQL Server 2019</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-content">
+            <div class="timeline-label">ปัจจุบัน</div>
+            <div class="timeline-text">SharePoint SE<br>+ SQL Server 2025</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <div class="timeline-content">
+            <div class="timeline-label">อนาคต</div>
+            <div class="timeline-text">ย้ายข้อมูล 33 Sites (~100GB) ไปยัง Intranet ใหม่</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Intranet System Overview</span>
+      <span>5 / 13</span>
+    </div>
+  </div>
+
+  <!-- Slide 6 -->
+  <div class="pres-slide" data-slide="6">
+    <div class="slide-header">
+      <span>Confidential | LH Bank</span>
+      <span class="slide-header-right">IT Department</span>
+    </div>
+    <div class="slide-body">
+      <div class="content-title">Daily Operation - ขั้นตอนการดำเนินงาน</div>
+      <div class="flow-container">
+        <div class="flow-node">
+          <div class="flow-label">Step 1</div>
+          <div class="flow-name">Requestor</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-label">Step 2</div>
+          <div class="flow-name">CR</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-label">Step 3</div>
+          <div class="flow-name">System Integrator</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-label">Step 4</div>
+          <div class="flow-name">PO</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-label">Step 5</div>
+          <div class="flow-name">Vendor</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-label">Step 6</div>
+          <div class="flow-name">Deliver</div>
+        </div>
+      </div>
+      <div class="flow-note">
+        <strong>K.Doy</strong> ดูแลการประสานงาน &nbsp;|&nbsp; <strong>K.Chev</strong> ดูแล Content Layout ตาม CR
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Intranet System Overview</span>
+      <span>6 / 13</span>
+    </div>
+  </div>
+
+  <!-- Slide 7 -->
+  <div class="pres-slide" data-slide="7">
+    <div class="slide-section-divider" style="flex:1;">
+      <div class="section-label">Section 02</div>
+      <div class="section-line"></div>
+      <div class="section-title">แผนการพัฒนาปัจจุบัน</div>
+    </div>
+  </div>
+
+  <!-- Slide 8 -->
+  <div class="pres-slide" data-slide="8">
+    <div class="slide-header">
+      <span>Confidential | LH Bank</span>
+      <span class="slide-header-right">IT Department</span>
+    </div>
+    <div class="slide-body">
+      <div class="content-title">สถานะการพัฒนาล่าสุด</div>
+      <div class="stat-badge">
+        <span class="badge-dot"></span> UAT: กันยายน 2568
+      </div>
+      <div class="cards-row cols-2" style="flex:1;">
+        <div class="cr-card">
+          <div class="cr-header">
+            <span class="cr-number">CR #1</span>
+            <span class="cr-name">ระบบ Upload Files ไปยัง ShareDrive</span>
+          </div>
+          <div class="cr-details">
+            <div class="cr-detail"><strong>ราคา:</strong> 70,000 บาท</div>
+            <div class="cr-detail"><strong>ระยะเวลา:</strong> 7 MD</div>
+          </div>
+          <div class="cr-status status-approved">✅ อนุมัติแล้ว รอ PO</div>
+        </div>
+        <div class="cr-card">
+          <div class="cr-header">
+            <span class="cr-number">CR #2</span>
+            <span class="cr-name">ระบบ Contents สำหรับ BU อัพเดทข่าวสาร</span>
+          </div>
+          <div class="cr-details">
+            <div class="cr-detail"><strong>ราคา:</strong> 200,000 บาท</div>
+            <div class="cr-detail"><strong>ระยะเวลา:</strong> 30 MD</div>
+          </div>
+          <div class="cr-status status-pending">⏳ รอดำเนินการ</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Intranet System Overview</span>
+      <span>8 / 13</span>
+    </div>
+  </div>
+
+  <!-- Slide 9 -->
+  <div class="pres-slide" data-slide="9">
+    <div class="slide-section-divider" style="flex:1;">
+      <div class="section-label">Section 03</div>
+      <div class="section-line"></div>
+      <div class="section-title">สิ่งที่ DAD ต้องพิจารณา</div>
+    </div>
+  </div>
+
+  <!-- Slide 10 -->
+  <div class="pres-slide" data-slide="10">
+    <div class="slide-header">
+      <span>Confidential | LH Bank</span>
+      <span class="slide-header-right">IT Department</span>
+    </div>
+    <div class="slide-body">
+      <div class="content-title">สิ่งที่ทีม DAD ต้องพิจารณา</div>
+      <div class="cards-row cols-2" style="flex:1;">
+        <div class="info-card card-teal">
+          <div class="card-icon">🔄</div>
+          <div class="card-title">Daily Operation</div>
+          <div class="card-body">
+            งานประสานงานกับ Vendor เมื่อพบปัญหาจาก User<br><br>
+            ต้องมีความเข้าใจในขั้นตอนการทำงานร่วมกับ Supplier และ Vendor ภายนอก
+          </div>
+        </div>
+        <div class="info-card card-teal">
+          <div class="card-icon">🖥️</div>
+          <div class="card-title">Server Management</div>
+          <div class="card-body">
+            ทีม IT-System ดูแลอยู่แล้ว<br><br>
+            <strong>DAD ไม่น่าจะได้รับอนุญาต</strong> ให้ดูแล Server โดยตรง
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Intranet System Overview</span>
+      <span>10 / 13</span>
+    </div>
+  </div>
+
+  <!-- Slide 11 -->
+  <div class="pres-slide" data-slide="11">
+    <div class="slide-header">
+      <span>Confidential | LH Bank</span>
+      <span class="slide-header-right">IT Department</span>
+    </div>
+    <div class="slide-body">
+      <div class="content-title">การดูแล Content Management</div>
+      <div class="comparison">
+        <div class="comparison-col pros">
+          <div class="col-header">✅ ข้อดี</div>
+          <div class="comparison-item">
+            <span class="item-icon">✅</span>
+            <span>สามารถเข้า Manage ได้เอง</span>
+          </div>
+          <div class="comparison-item">
+            <span class="item-icon">✅</span>
+            <span>สามารถกำหนดนโยบายหรือเปลี่ยนแปลงได้เร็ว</span>
+          </div>
+        </div>
+        <div class="comparison-col cons">
+          <div class="col-header">❌ ข้อเสีย</div>
+          <div class="comparison-item">
+            <span class="item-icon">❌</span>
+            <span>การเปลี่ยนแปลงต้องขออนุมัติจาก IT-Infra, IT-System ก่อน</span>
+          </div>
+          <div class="comparison-item">
+            <span class="item-icon">❌</span>
+            <span>มีค่าใช้จ่าย License (SharePoint, Windows Server, SQL)</span>
+          </div>
+          <div class="comparison-item">
+            <span class="item-icon">❌</span>
+            <span>ไม่รับการโอนไป BU อื่น</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Intranet System Overview</span>
+      <span>11 / 13</span>
+    </div>
+  </div>
+
+  <!-- Slide 12 -->
+  <div class="pres-slide" data-slide="12">
+    <div class="slide-header">
+      <span>Confidential | LH Bank</span>
+      <span class="slide-header-right">IT Department</span>
+    </div>
+    <div class="slide-body">
+      <div class="content-title">สรุปและข้อเสนอแนะ</div>
+      <ul class="summary-list">
+        <li>
+          <span class="num">1</span>
+          <span class="text">งานหลักที่ DAD จะรับผิดชอบคือ <strong>Content Management</strong></span>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <span class="text">งาน Server ยังคงเป็นหน้าที่ของ <strong>IT-System</strong></span>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <span class="text">งาน Daily Operation ต้องมีการ <strong>ประสานงานกับ Vendor อย่างต่อเนื่อง</strong></span>
+        </li>
+        <li>
+          <span class="num">4</span>
+          <span class="text">ควรพิจารณาข้อจำกัดด้าน <strong>License และการขออนุมัติ</strong></span>
+        </li>
+      </ul>
+    </div>
+    <div class="slide-footer">
+      <span>Intranet System Overview</span>
+      <span>12 / 13</span>
+    </div>
+  </div>
+
+  <!-- Slide 13 -->
+  <div class="pres-slide" data-slide="13">
+    <div class="slide-thankyou" style="flex:1;">
+      <div class="ty-title">ขอบคุณครับ/ค่ะ</div>
+      <div class="ty-line"></div>
+      <div class="ty-dept">Digital &amp; Automation Development</div>
+      <div class="ty-meta">IT Department | กันยายน 2568</div>
+    </div>
+  </div>
+
+  <!-- Presentation Controls -->
+  <div class="pres-controls" id="presControls">
+    <button onclick="prevSlide()" title="Previous (←)">◀</button>
+    <button onclick="nextSlide()" title="Next (→)">▶</button>
+    <button onclick="exitPresentation()" title="Exit (Esc)">✕</button>
+  </div>
+  <div class="pres-slide-counter" id="slideCounter">1 / 13</div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function() {
+  // State
+  let currentSlide = 0;
+  let totalSlides = 13;
+  let isPresentMode = false;
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  // DOM refs
+  const presMode = document.getElementById('presMode');
+  const websiteContent = document.getElementById('websiteContent');
+  const navbar = document.getElementById('navbar');
+  const slideCounter = document.getElementById('slideCounter');
+  const presSlides = document.querySelectorAll('.pres-slide');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  // Initialize first slide
+  presSlides[0].classList.add('active');
+  updateCounter();
+
+  // ---- Presentation Mode ----
+  window.enterPresentation = function() {
+    isPresentMode = true;
+    presMode.classList.add('active');
+    document.body.classList.add('pres-mode-active');
+    navbar.style.display = 'none';
+    websiteContent.style.display = 'none';
+    scaleSlides();
+    showSlide(currentSlide);
+  };
+
+  window.exitPresentation = function() {
+    isPresentMode = false;
+    presMode.classList.remove('active');
+    document.body.classList.remove('pres-mode-active');
+    navbar.style.display = '';
+    websiteContent.style.display = '';
+  };
+
+  // ---- Navigation ----
+  window.nextSlide = function() {
+    if (currentSlide < totalSlides - 1) {
+      presSlides[currentSlide].classList.remove('active');
+      currentSlide++;
+      presSlides[currentSlide].classList.add('active');
+      updateCounter();
+      scaleSlides();
+    }
+  };
+
+  window.prevSlide = function() {
+    if (currentSlide > 0) {
+      presSlides[currentSlide].classList.remove('active');
+      currentSlide--;
+      presSlides[currentSlide].classList.add('active');
+      updateCounter();
+      scaleSlides();
+    }
+  };
+
+  function showSlide(index) {
+    presSlides.forEach(function(s, i) {
+      s.classList.toggle('active', i === index);
+    });
+    currentSlide = index;
+    updateCounter();
+    scaleSlides();
+  }
+
+  function updateCounter() {
+    if (slideCounter) {
+      slideCounter.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+    }
+  }
+
+  // ---- Scaling ----
+  window.scaleSlides = function() {
+    if (!isPresentMode) return;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const scaleX = vw / 1920;
+    const scaleY = vh / 1080;
+    const scale = Math.min(scaleX, scaleY);
+    presSlides.forEach(function(slide) {
+      slide.style.transform = 'scale(' + scale + ')';
+      slide.style.transformOrigin = 'top left';
+      slide.style.left = ((vw - 1920 * scale) / 2) + 'px';
+      slide.style.top = ((vh - 1080 * scale) / 2) + 'px';
+    });
+  };
+
+  // ---- Keyboard Navigation ----
+  document.addEventListener('keydown', function(e) {
+    if (!isPresentMode) return;
+    switch(e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case ' ':
+        e.preventDefault();
+        nextSlide();
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        e.preventDefault();
+        prevSlide();
+        break;
+      case 'Escape':
+        e.preventDefault();
+        exitPresentation();
+        break;
+      case 'F5':
+        // let browser handle F5 refresh if not in pres mode
+        break;
+    }
+  });
+
+  // ---- F5 to enter presentation ----
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'F5' && !isPresentMode) {
+      e.preventDefault();
+      enterPresentation();
+    }
+  });
+
+  // ---- Touch Swipe ----
+  presMode.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  presMode.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+  }
+
+  // ---- Website Navigation (scroll to section) ----
+  window.showSection = function(sectionId) {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // ---- Active Nav Link Tracking ----
+  function updateActiveNav() {
+    if (isPresentMode) return;
+    const sections = document.querySelectorAll('.slide-section');
+    let activeIndex = 0;
+    const scrollY = window.scrollY + 200;
+    sections.forEach(function(sec, i) {
+      if (sec.offsetTop <= scrollY) {
+        activeIndex = i;
+      }
+    });
+    navLinks.forEach(function(link, i) {
+      link.classList.toggle('active', i === activeIndex);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+
+  // ---- Resize handler ----
+  window.addEventListener('resize', function() {
+    if (isPresentMode) scaleSlides();
+  });
+
+  // ---- Nav link click handler ----
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const href = this.getAttribute('href');
+      if (href) {
+        const secId = href.replace('#', '');
+        showSection(secId);
+      }
+    });
+  });
+
+  // Initial check
+  updateActiveNav();
+
+})();
+</script>
+</body>
+</html>
