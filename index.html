@@ -24,6 +24,7 @@
   --bg-subtle: #F7FAF9;
   --gradient-title: linear-gradient(135deg, var(--bg-title) 0%, var(--bg-title-end) 100%);
   --gradient-accent: linear-gradient(90deg, var(--bg-title) 0%, var(--accent-teal) 100%);
+  --aws-orange: #FF9900;
 }
 
 /* =============================================
@@ -275,43 +276,6 @@ body {
 }
 
 /* =============================================
-   Section Divider
-   ============================================= */
-.slide-section-divider {
-  background: var(--gradient-title);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 80px 60px;
-}
-
-.slide-section-divider .section-label {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  opacity: 0.6;
-  margin-bottom: 16px;
-}
-
-.slide-section-divider .section-title {
-  font-size: 44px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-}
-
-.slide-section-divider .section-line {
-  width: 48px;
-  height: 3px;
-  background: var(--accent-teal);
-  border-radius: 2px;
-  margin: 24px auto;
-}
-
-/* =============================================
    Thank You Slide
    ============================================= */
 .slide-thankyou {
@@ -487,7 +451,6 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 0;
-  flex: 1;
   padding: 20px 0;
 }
 
@@ -623,6 +586,115 @@ body {
 .flow-note strong { color: var(--text-primary); }
 
 /* =============================================
+   Data Pipeline Diagram
+   ============================================= */
+.pipeline-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 24px 0;
+  padding: 24px 0;
+}
+
+.pipeline-node {
+  border-radius: 12px;
+  padding: 28px 32px;
+  text-align: center;
+  min-width: 240px;
+  transition: all 0.25s;
+  position: relative;
+}
+
+.pipeline-node:hover {
+  transform: translateY(-2px);
+}
+
+.pipeline-node .node-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.pipeline-node .node-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.pipeline-node .node-sub {
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+/* SharePoint Node */
+.pipeline-node.node-sharepoint {
+  background: linear-gradient(135deg, #003D32, #01A982);
+  color: #fff;
+  border: 2px solid var(--accent-teal);
+  box-shadow: 0 4px 16px rgba(1,169,130,0.25);
+}
+
+/* Pipeline Process Node */
+.pipeline-node.node-pipeline {
+  background: #F0F4FF;
+  color: #2D3A5C;
+  border: 2px solid #7B8DB8;
+  min-width: 200px;
+  box-shadow: 0 4px 16px rgba(123,141,184,0.15);
+}
+
+.pipeline-node.node-pipeline .node-title {
+  color: #2D3A5C;
+}
+
+.pipeline-node.node-pipeline .node-sub {
+  color: #6B7A99;
+}
+
+/* AWS S3 Node */
+.pipeline-node.node-s3 {
+  background: linear-gradient(135deg, #FF9900, #EC7211);
+  color: #fff;
+  border: 2px solid var(--aws-orange);
+  box-shadow: 0 4px 16px rgba(255,153,0,0.25);
+}
+
+.pipeline-arrow {
+  font-size: 32px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  padding: 0 8px;
+}
+
+.pipeline-arrow.teal { color: var(--accent-teal); }
+.pipeline-arrow.orange { color: var(--aws-orange); }
+
+.pipeline-notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.pipeline-note-item {
+  padding: 16px 20px;
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.pipeline-note-item strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+/* =============================================
    Stats + Cards
    ============================================= */
 .stat-badge {
@@ -715,6 +787,26 @@ body {
 .cr-status.status-pending {
   background: #FFF3E0;
   color: #E67E22;
+}
+
+/* CR Card Featured (for 70K) */
+.cr-card.cr-featured {
+  border: 2px solid var(--accent-teal);
+  background: linear-gradient(135deg, #F0FAF7 0%, #FFFFFF 100%);
+}
+
+.cr-card.cr-featured .cr-number {
+  background: var(--bg-title);
+  font-size: 14px;
+  padding: 6px 16px;
+}
+
+.cr-card.cr-featured .cr-name {
+  font-size: 20px;
+}
+
+.cr-card.cr-featured .cr-detail {
+  font-size: 14px;
 }
 
 /* =============================================
@@ -810,6 +902,19 @@ body {
 .summary-list .text strong { color: var(--text-primary); }
 
 /* =============================================
+   Sub-title for merged slides
+   ============================================= */
+.sub-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--bg-title);
+  margin-top: 28px;
+  margin-bottom: 16px;
+  padding-left: 16px;
+  border-left: 3px solid var(--accent-teal);
+}
+
+/* =============================================
    Responsive
    ============================================= */
 @media (max-width: 1024px) {
@@ -821,6 +926,8 @@ body {
   .timeline { flex-direction: column; gap: 24px; }
   .timeline-item::before { display: none; }
   .flow-container { flex-wrap: wrap; justify-content: center; }
+  .pipeline-container { flex-direction: column; gap: 12px; }
+  .pipeline-notes { grid-template-columns: 1fr; }
 }
 
 /* =============================================
@@ -887,14 +994,13 @@ body {
   </div>
   <div class="nav-links" id="navLinks">
     <a href="#sec-1" data-slide="0">ภาพรวม</a>
-    <a href="#sec-3" data-slide="2">โครงสร้าง</a>
-    <a href="#sec-4" data-slide="3">Server</a>
-    <a href="#sec-5" data-slide="4">ประวัติ</a>
-    <a href="#sec-6" data-slide="5">Daily Operation</a>
-    <a href="#sec-8" data-slide="7">สถานะพัฒนา</a>
-    <a href="#sec-10" data-slide="9">พิจารณา</a>
-    <a href="#sec-11" data-slide="10">ข้อดี/ข้อเสีย</a>
-    <a href="#sec-12" data-slide="11">สรุป</a>
+    <a href="#sec-2" data-slide="1">โครงสร้าง</a>
+    <a href="#sec-3" data-slide="2">ประวัติ + Pipeline</a>
+    <a href="#sec-4" data-slide="3">Daily Operation</a>
+    <a href="#sec-5" data-slide="4">สถานะ CR</a>
+    <a href="#sec-6" data-slide="5">พิจารณา</a>
+    <a href="#sec-7" data-slide="6">ข้อดี/ข้อเสีย</a>
+    <a href="#sec-8" data-slide="7">สรุป</a>
   </div>
   <button class="nav-btn-preset" onclick="enterPresentation()" title="Fullscreen Presentation (F5)">
     ▶ Presentation
@@ -919,19 +1025,8 @@ body {
     </div>
   </div>
 
-  <!-- SLIDE 2: Section Divider -->
+  <!-- SLIDE 2: โครงสร้างการดูแล + Server (Merged) -->
   <div class="slide-section" id="sec-2">
-    <div class="slide-inner">
-      <div class="slide-section-divider" style="flex:1;">
-        <div class="section-label">Section 01</div>
-        <div class="section-line"></div>
-        <div class="section-title">ภาพปัจจุบัน</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 3: Current Management Structure -->
-  <div class="slide-section" id="sec-3">
     <div class="slide-inner">
       <div class="slide-header">
         <span>Confidential | LH Bank</span>
@@ -966,23 +1061,7 @@ body {
             </div>
           </div>
         </div>
-      </div>
-      <div class="slide-footer">
-        <span>Intranet System Overview</span>
-        <span>3 / 13</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 4: Server Infrastructure -->
-  <div class="slide-section" id="sec-4">
-    <div class="slide-inner">
-      <div class="slide-header">
-        <span>Confidential | LH Bank</span>
-        <span class="slide-header-right">IT Department</span>
-      </div>
-      <div class="slide-body">
-        <div class="content-title">โครงสร้าง Server ปัจจุบัน</div>
+        <div class="sub-title">โครงสร้าง Server ปัจจุบัน</div>
         <table class="data-table">
           <thead>
             <tr>
@@ -1010,13 +1089,13 @@ body {
       </div>
       <div class="slide-footer">
         <span>Intranet System Overview</span>
-        <span>4 / 13</span>
+        <span>2 / 9</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 5: Timeline -->
-  <div class="slide-section" id="sec-5">
+  <!-- SLIDE 3: ประวัติการ Upgrade + Data Pipeline (Merged) -->
+  <div class="slide-section" id="sec-3">
     <div class="slide-inner">
       <div class="slide-header">
         <span>Confidential | LH Bank</span>
@@ -1054,16 +1133,54 @@ body {
             </div>
           </div>
         </div>
+
+        <div class="sub-title">โครงสร้างระบบและ Data Pipeline</div>
+
+        <!-- Data Pipeline Diagram -->
+        <div class="pipeline-container">
+          <div class="pipeline-node node-sharepoint">
+            <div class="node-icon">📄</div>
+            <div class="node-title">SharePoint SE</div>
+            <div class="node-sub">Server + SQL Server 2025</div>
+          </div>
+          <div class="pipeline-arrow teal">➡️</div>
+          <div class="pipeline-node node-pipeline">
+            <div class="node-icon">⚙️</div>
+            <div class="node-title">Data Pipeline</div>
+            <div class="node-sub">ETL / Sync Process</div>
+          </div>
+          <div class="pipeline-arrow orange">➡️</div>
+          <div class="pipeline-node node-s3">
+            <div class="node-icon">☁️</div>
+            <div class="node-title">AWS S3</div>
+            <div class="node-sub">Cloud Storage</div>
+          </div>
+        </div>
+
+        <div class="pipeline-notes">
+          <div class="pipeline-note-item">
+            <strong>🔄 File Sync</strong>
+            ย้ายไฟล์จาก SharePoint ไปยัง AWS S3
+          </div>
+          <div class="pipeline-note-item">
+            <strong>📦 Backup &amp; Archive</strong>
+            เก็บข้อมูลสำรองบน Cloud
+          </div>
+          <div class="pipeline-note-item">
+            <strong>💰 Cost Optimization</strong>
+            ลดการใช้พื้นที่บน-premise
+          </div>
+        </div>
       </div>
       <div class="slide-footer">
         <span>Intranet System Overview</span>
-        <span>5 / 13</span>
+        <span>3 / 9</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 6: Daily Operations Flow -->
-  <div class="slide-section" id="sec-6">
+  <!-- SLIDE 4: Daily Operation Flow -->
+  <div class="slide-section" id="sec-4">
     <div class="slide-inner">
       <div class="slide-header">
         <span>Confidential | LH Bank</span>
@@ -1108,36 +1225,26 @@ body {
       </div>
       <div class="slide-footer">
         <span>Intranet System Overview</span>
-        <span>6 / 13</span>
+        <span>4 / 9</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 7: Section Divider -->
-  <div class="slide-section" id="sec-7">
-    <div class="slide-inner">
-      <div class="slide-section-divider" style="flex:1;">
-        <div class="section-label">Section 02</div>
-        <div class="section-line"></div>
-        <div class="section-title">แผนการพัฒนาปัจจุบัน</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 8: Development Status -->
-  <div class="slide-section" id="sec-8">
+  <!-- SLIDE 5: สถานะ CR ล่าสุด (CR 70K Featured) -->
+  <div class="slide-section" id="sec-5">
     <div class="slide-inner">
       <div class="slide-header">
         <span>Confidential | LH Bank</span>
         <span class="slide-header-right">IT Department</span>
       </div>
       <div class="slide-body">
-        <div class="content-title">สถานะการพัฒนาล่าสุด</div>
+        <div class="content-title">สถานะ CR ล่าสุด</div>
         <div class="stat-badge">
           <span class="badge-dot"></span> UAT: กันยายน 2568
         </div>
         <div class="cards-row cols-2" style="flex:1;">
-          <div class="cr-card">
+          <!-- CR #1 - Featured -->
+          <div class="cr-card cr-featured">
             <div class="cr-header">
               <span class="cr-number">CR #1</span>
               <span class="cr-name">ระบบ Upload Files ไปยัง ShareDrive</span>
@@ -1148,6 +1255,7 @@ body {
             </div>
             <div class="cr-status status-approved">✅ อนุมัติแล้ว รอ PO</div>
           </div>
+          <!-- CR #2 - Smaller -->
           <div class="cr-card">
             <div class="cr-header">
               <span class="cr-number">CR #2</span>
@@ -1163,24 +1271,13 @@ body {
       </div>
       <div class="slide-footer">
         <span>Intranet System Overview</span>
-        <span>8 / 13</span>
+        <span>5 / 9</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 9: Section Divider -->
-  <div class="slide-section" id="sec-9">
-    <div class="slide-inner">
-      <div class="slide-section-divider" style="flex:1;">
-        <div class="section-label">Section 03</div>
-        <div class="section-line"></div>
-        <div class="section-title">สิ่งที่ DAD ต้องพิจารณา</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 10: Considerations -->
-  <div class="slide-section" id="sec-10">
+  <!-- SLIDE 6: สิ่งที่ DAD ต้องพิจารณา -->
+  <div class="slide-section" id="sec-6">
     <div class="slide-inner">
       <div class="slide-header">
         <span>Confidential | LH Bank</span>
@@ -1209,13 +1306,13 @@ body {
       </div>
       <div class="slide-footer">
         <span>Intranet System Overview</span>
-        <span>10 / 13</span>
+        <span>6 / 9</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 11: Pros & Cons -->
-  <div class="slide-section" id="sec-11">
+  <!-- SLIDE 7: ข้อดี/ข้อเสีย Content Management -->
+  <div class="slide-section" id="sec-7">
     <div class="slide-inner">
       <div class="slide-header">
         <span>Confidential | LH Bank</span>
@@ -1254,13 +1351,13 @@ body {
       </div>
       <div class="slide-footer">
         <span>Intranet System Overview</span>
-        <span>11 / 13</span>
+        <span>7 / 9</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 12: Summary -->
-  <div class="slide-section" id="sec-12">
+  <!-- SLIDE 8: สรุปและข้อเสนอแนะ -->
+  <div class="slide-section" id="sec-8">
     <div class="slide-inner">
       <div class="slide-header">
         <span>Confidential | LH Bank</span>
@@ -1289,13 +1386,13 @@ body {
       </div>
       <div class="slide-footer">
         <span>Intranet System Overview</span>
-        <span>12 / 13</span>
+        <span>8 / 9</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 13: Thank You -->
-  <div class="slide-section" id="sec-13">
+  <!-- SLIDE 9: Thank You -->
+  <div class="slide-section" id="sec-9">
     <div class="slide-inner">
       <div class="slide-thankyou" style="flex:1;">
         <div class="ty-title">ขอบคุณครับ/ค่ะ</div>
@@ -1313,7 +1410,7 @@ body {
      ============================================================ -->
 <div class="pres-mode" id="presMode">
 
-  <!-- Slide 1 -->
+  <!-- Slide 1: Title -->
   <div class="pres-slide active" data-slide="1">
     <div class="slide-title-bg" style="flex:1;">
       <div class="title-main">Intranet System Overview</div>
@@ -1324,17 +1421,8 @@ body {
     </div>
   </div>
 
-  <!-- Slide 2 -->
+  <!-- Slide 2: โครงสร้าง + Server -->
   <div class="pres-slide" data-slide="2">
-    <div class="slide-section-divider" style="flex:1;">
-      <div class="section-label">Section 01</div>
-      <div class="section-line"></div>
-      <div class="section-title">ภาพปัจจุบัน</div>
-    </div>
-  </div>
-
-  <!-- Slide 3 -->
-  <div class="pres-slide" data-slide="3">
     <div class="slide-header">
       <span>Confidential | LH Bank</span>
       <span class="slide-header-right">IT Department</span>
@@ -1368,21 +1456,7 @@ body {
           </div>
         </div>
       </div>
-    </div>
-    <div class="slide-footer">
-      <span>Intranet System Overview</span>
-      <span>3 / 13</span>
-    </div>
-  </div>
-
-  <!-- Slide 4 -->
-  <div class="pres-slide" data-slide="4">
-    <div class="slide-header">
-      <span>Confidential | LH Bank</span>
-      <span class="slide-header-right">IT Department</span>
-    </div>
-    <div class="slide-body">
-      <div class="content-title">โครงสร้าง Server ปัจจุบัน</div>
+      <div class="sub-title">โครงสร้าง Server ปัจจุบัน</div>
       <table class="data-table">
         <thead>
           <tr>
@@ -1410,12 +1484,12 @@ body {
     </div>
     <div class="slide-footer">
       <span>Intranet System Overview</span>
-      <span>4 / 13</span>
+      <span>2 / 9</span>
     </div>
   </div>
 
-  <!-- Slide 5 -->
-  <div class="pres-slide" data-slide="5">
+  <!-- Slide 3: ประวัติ + Data Pipeline -->
+  <div class="pres-slide" data-slide="3">
     <div class="slide-header">
       <span>Confidential | LH Bank</span>
       <span class="slide-header-right">IT Department</span>
@@ -1452,15 +1526,52 @@ body {
           </div>
         </div>
       </div>
+
+      <div class="sub-title">โครงสร้างระบบและ Data Pipeline</div>
+
+      <div class="pipeline-container">
+        <div class="pipeline-node node-sharepoint">
+          <div class="node-icon">📄</div>
+          <div class="node-title">SharePoint SE</div>
+          <div class="node-sub">Server + SQL Server 2025</div>
+        </div>
+        <div class="pipeline-arrow teal">➡️</div>
+        <div class="pipeline-node node-pipeline">
+          <div class="node-icon">⚙️</div>
+          <div class="node-title">Data Pipeline</div>
+          <div class="node-sub">ETL / Sync Process</div>
+        </div>
+        <div class="pipeline-arrow orange">➡️</div>
+        <div class="pipeline-node node-s3">
+          <div class="node-icon">☁️</div>
+          <div class="node-title">AWS S3</div>
+          <div class="node-sub">Cloud Storage</div>
+        </div>
+      </div>
+
+      <div class="pipeline-notes">
+        <div class="pipeline-note-item">
+          <strong>🔄 File Sync</strong>
+          ย้ายไฟล์จาก SharePoint ไปยัง AWS S3
+        </div>
+        <div class="pipeline-note-item">
+          <strong>📦 Backup &amp; Archive</strong>
+          เก็บข้อมูลสำรองบน Cloud
+        </div>
+        <div class="pipeline-note-item">
+          <strong>💰 Cost Optimization</strong>
+          ลดการใช้พื้นที่บน-premise
+        </div>
+      </div>
     </div>
     <div class="slide-footer">
       <span>Intranet System Overview</span>
-      <span>5 / 13</span>
+      <span>3 / 9</span>
     </div>
   </div>
 
-  <!-- Slide 6 -->
-  <div class="pres-slide" data-slide="6">
+  <!-- Slide 4: Daily Operation -->
+  <div class="pres-slide" data-slide="4">
     <div class="slide-header">
       <span>Confidential | LH Bank</span>
       <span class="slide-header-right">IT Department</span>
@@ -1504,32 +1615,23 @@ body {
     </div>
     <div class="slide-footer">
       <span>Intranet System Overview</span>
-      <span>6 / 13</span>
+      <span>4 / 9</span>
     </div>
   </div>
 
-  <!-- Slide 7 -->
-  <div class="pres-slide" data-slide="7">
-    <div class="slide-section-divider" style="flex:1;">
-      <div class="section-label">Section 02</div>
-      <div class="section-line"></div>
-      <div class="section-title">แผนการพัฒนาปัจจุบัน</div>
-    </div>
-  </div>
-
-  <!-- Slide 8 -->
-  <div class="pres-slide" data-slide="8">
+  <!-- Slide 5: สถานะ CR -->
+  <div class="pres-slide" data-slide="5">
     <div class="slide-header">
       <span>Confidential | LH Bank</span>
       <span class="slide-header-right">IT Department</span>
     </div>
     <div class="slide-body">
-      <div class="content-title">สถานะการพัฒนาล่าสุด</div>
+      <div class="content-title">สถานะ CR ล่าสุด</div>
       <div class="stat-badge">
         <span class="badge-dot"></span> UAT: กันยายน 2568
       </div>
       <div class="cards-row cols-2" style="flex:1;">
-        <div class="cr-card">
+        <div class="cr-card cr-featured">
           <div class="cr-header">
             <span class="cr-number">CR #1</span>
             <span class="cr-name">ระบบ Upload Files ไปยัง ShareDrive</span>
@@ -1555,21 +1657,12 @@ body {
     </div>
     <div class="slide-footer">
       <span>Intranet System Overview</span>
-      <span>8 / 13</span>
+      <span>5 / 9</span>
     </div>
   </div>
 
-  <!-- Slide 9 -->
-  <div class="pres-slide" data-slide="9">
-    <div class="slide-section-divider" style="flex:1;">
-      <div class="section-label">Section 03</div>
-      <div class="section-line"></div>
-      <div class="section-title">สิ่งที่ DAD ต้องพิจารณา</div>
-    </div>
-  </div>
-
-  <!-- Slide 10 -->
-  <div class="pres-slide" data-slide="10">
+  <!-- Slide 6: พิจารณา -->
+  <div class="pres-slide" data-slide="6">
     <div class="slide-header">
       <span>Confidential | LH Bank</span>
       <span class="slide-header-right">IT Department</span>
@@ -1597,12 +1690,12 @@ body {
     </div>
     <div class="slide-footer">
       <span>Intranet System Overview</span>
-      <span>10 / 13</span>
+      <span>6 / 9</span>
     </div>
   </div>
 
-  <!-- Slide 11 -->
-  <div class="pres-slide" data-slide="11">
+  <!-- Slide 7: ข้อดี/ข้อเสีย -->
+  <div class="pres-slide" data-slide="7">
     <div class="slide-header">
       <span>Confidential | LH Bank</span>
       <span class="slide-header-right">IT Department</span>
@@ -1640,12 +1733,12 @@ body {
     </div>
     <div class="slide-footer">
       <span>Intranet System Overview</span>
-      <span>11 / 13</span>
+      <span>7 / 9</span>
     </div>
   </div>
 
-  <!-- Slide 12 -->
-  <div class="pres-slide" data-slide="12">
+  <!-- Slide 8: สรุป -->
+  <div class="pres-slide" data-slide="8">
     <div class="slide-header">
       <span>Confidential | LH Bank</span>
       <span class="slide-header-right">IT Department</span>
@@ -1673,12 +1766,12 @@ body {
     </div>
     <div class="slide-footer">
       <span>Intranet System Overview</span>
-      <span>12 / 13</span>
+      <span>8 / 9</span>
     </div>
   </div>
 
-  <!-- Slide 13 -->
-  <div class="pres-slide" data-slide="13">
+  <!-- Slide 9: Thank You -->
+  <div class="pres-slide" data-slide="9">
     <div class="slide-thankyou" style="flex:1;">
       <div class="ty-title">ขอบคุณครับ/ค่ะ</div>
       <div class="ty-line"></div>
@@ -1693,7 +1786,7 @@ body {
     <button onclick="nextSlide()" title="Next (→)">▶</button>
     <button onclick="exitPresentation()" title="Exit (Esc)">✕</button>
   </div>
-  <div class="pres-slide-counter" id="slideCounter">1 / 13</div>
+  <div class="pres-slide-counter" id="slideCounter">1 / 9</div>
 </div>
 
 <!-- ============================================================
@@ -1703,7 +1796,7 @@ body {
 (function() {
   // State
   let currentSlide = 0;
-  let totalSlides = 13;
+  let totalSlides = 9;
   let isPresentMode = false;
   let touchStartX = 0;
   let touchEndX = 0;
@@ -1811,7 +1904,6 @@ body {
         exitPresentation();
         break;
       case 'F5':
-        // let browser handle F5 refresh if not in pres mode
         break;
     }
   });
